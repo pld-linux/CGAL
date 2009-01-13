@@ -1,5 +1,4 @@
 %define boost_version 1.32
-
 Summary:	Computational Geometry Algorithms Library
 Name:		CGAL
 Version:	3.3.1
@@ -13,13 +12,14 @@ Patch1:		%{name}-install_cgal-SUPPORT_REQUIRED.patch
 Patch2:		%{name}-build-library.patch
 Patch4:		%{name}-install_cgal-no_versions_in_compiler_config.h.patch
 BuildRequires:	blas-devel
-BuildRequires:	lapack-devel
-BuildRequires:	boost-devel >= %boost_version
-BuildRequires:	gmp-devel
-BuildRequires:	qt-devel >= 3.0
-BuildRequires:	zlib-devel
-BuildRequires:	mpfr-devel
+BuildRequires:	boost-devel >= %{boost_version}
 BuildRequires:	gmp-c++-devel
+BuildRequires:	gmp-devel
+BuildRequires:	lapack-devel
+BuildRequires:	mpfr-devel
+BuildRequires:	qt-devel >= 3.0
+BuildRequires:	sed >= 4.0
+BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -30,24 +30,23 @@ geometry available to users in industry and academia in a C++ library.
 The goal is to provide easy access to useful, reliable geometric
 algorithms.
 
-
 %package devel
 Summary:	Development files and tools for CGAL applications
 Group:		Development/Libraries
 Requires:	%{_sysconfdir}/profile.d
 Requires:	%{name} = %{version}-%{release}
 Requires:	blas-devel
+Requires:	boost-devel >= %{boost_version}
+Requires:	gmp-c++-devel
+Requires:	gmp-devel
 Requires:	lapack-devel
+Requires:	mpfr-devel
 Requires:	qt-devel
 Requires:	zlib-devel
-Requires:	gmp-devel
-Requires:	boost-devel >= %{boost_version}
-Requires:	mpfr-devel
-Requires:	gmp-c++-devel
+
 %description devel
 The %{name}-devel package provides the headers files and tools you may
 need to develop applications using CGAL.
-
 
 %package demos-source
 Summary:	Examples and demos of CGAL algorithms
@@ -70,13 +69,10 @@ chmod a-x examples/Nef_3/handling_double_coordinates.cin
 for f in demo/Straight_skeleton_2/data/vertex_event_9.poly \
          demo/Straight_skeleton_2/data/vertex_event_0.poly \
          examples/Surface_mesh_parameterization/data/mask_cone.off \
-         examples/Boolean_set_operations_2/test.dxf;
-do
-  if [ -r $f ]; then
-    sed -i.bak 's/\r//' $f;
-    touch -r ${f}.bak $f
-    rm -f ${f}.bak
-  fi
+         examples/Boolean_set_operations_2/test.dxf; do
+	if [ -r $f ]; then
+		sed -i -e 's/\r//' $f
+	fi
 done
 
 %build
@@ -101,12 +97,11 @@ export QTDIR=%{_prefix}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 case "%{_arch}" in
-        *64* | s390 )
-           SUFFIX=64 ;;
-        * )
-           SUFFIX=32 ;;
+*64* | s390)
+	SUFFIX=64 ;;
+*)
+	SUFFIX=32 ;;
 esac
 
 # Install headers
@@ -115,9 +110,8 @@ cp -a include/* $RPM_BUILD_ROOT%{_includedir}
 rm -rf $RPM_BUILD_ROOT%{_includedir}/CGAL/config/msvc*
 mv $RPM_BUILD_ROOT%{_includedir}/CGAL/config/*/CGAL/compiler_config.h $RPM_BUILD_ROOT%{_includedir}/CGAL/compiler_config.h
 
-
 # remove the arch-specific comment
-sed -i -e '/System: / d' $RPM_BUILD_ROOT%{_includedir}/CGAL/compiler_config.h
+%{__sed} -i -e '/System: / d' $RPM_BUILD_ROOT%{_includedir}/CGAL/compiler_config.h
 
 # use the timestamp of install_cgal
 touch -r install_cgal $RPM_BUILD_ROOT%{_includedir}/CGAL/compiler_config.h
@@ -186,33 +180,33 @@ cat > $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/cgal.sh <<EOF
 ARCH=`uname -m`
 
 case \$ARCH in
-        x86_64 | ia64 | s390 )
-           SUFFIX=64 ;;
-        * )
-           SUFFIX=32 ;;
+	x86_64|ia64|s390)
+	   SUFFIX=64 ;;
+	*)
+	   SUFFIX=32 ;;
 esac
 
 if [ -z "\$CGAL_MAKEFILE" ] ; then
-  CGAL_MAKEFILE="%{_datadir}/CGAL/cgal-${SUFFIX}.mk"
-  export CGAL_MAKEFILE
+	CGAL_MAKEFILE="%{_datadir}/CGAL/cgal-${SUFFIX}.mk"
+	export CGAL_MAKEFILE
 fi
 EOF
 
 cat > $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/cgal.csh <<EOF
 set ARCH=`uname -m`
 
-switch( \$ARCH )
-        case x86_64:
-        case ia64:
-        case s390:
-          set SUFFIX=64;
-          breaksw;
-        default:
-          set SUFFIX=62;
+switch (\$ARCH)
+case x86_64:
+case ia64:
+case s390:
+	set SUFFIX=64;
+	breaksw;
+default:
+	set SUFFIX=62;
 endsw
 
-if ( ! \$?CGAL_MAKEFILE ) then
-  setenv CGAL_MAKEFILE "%{_datadir}/CGAL/cgal-${SUFFIX}.mk"
+if (! \$?CGAL_MAKEFILE ) then
+	setenv CGAL_MAKEFILE "%{_datadir}/CGAL/cgal-${SUFFIX}.mk"
 endif
 EOF
 
@@ -222,18 +216,14 @@ touch -r install_cgal $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/cgal.*sh
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-
-%post -p /sbin/ldconfig
-
-%postun -p /sbin/ldconfig
-
+%post	-p /sbin/ldconfig
+%postun	-p /sbin/ldconfig
 
 %files
 %defattr(644,root,root,755)
 %doc AUTHORS LICENSE LICENSE.FREE_USE LICENSE.LGPL LICENSE.QPL CHANGES
-%attr(755,root,root) %{_libdir}/libCGAL*.so.2
-%attr(755,root,root) %{_libdir}/libCGAL*.so.2.0.1
-
+%attr(755,root,root) %{_libdir}/libCGAL*.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libCGAL*.so.2
 
 %files devel
 %defattr(644,root,root,755)
@@ -243,8 +233,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_datadir}/CGAL/cgal*.mk
 %attr(755,root,root) %{_bindir}/*
 %exclude %{_bindir}/cgal_make_macosx_app
-%config(noreplace) /etc/profile.d/cgal.*
-
+%config(noreplace,missingok) %verify(not md5 mtime size) %attr(755,root,root) /etc/profile.d/cgal.*
 
 %files demos-source
 %defattr(644,root,root,755)
