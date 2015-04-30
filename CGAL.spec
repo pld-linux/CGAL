@@ -7,6 +7,7 @@
 # - cleanup?
 #   warning: Installed (but unpackaged) file(s) found:
 #   /usr/bin/cgal_make_macosx_app
+# - move qt stuff to subpackages?
 
 %define boost_version 1.32
 Summary:	Computational Geometry Algorithms Library
@@ -69,7 +70,6 @@ Requires:	%{name}-devel = %{version}-%{release}
 %description demos-source
 The %{name}-demos-source package provides the sources of examples and
 demos of CGAL algorithms.
-
 
 %prep
 %setup -q
