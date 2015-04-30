@@ -1,3 +1,13 @@
+# TODO
+# - force use of qt4, otherwise it may pick qt3! add bcond?
+# - check these:
+#   blas-devel may be superfluous !
+#   gmp-c++-devel may be superfluous !
+#   lapack-devel may be superfluous !
+# - cleanup?
+#   warning: Installed (but unpackaged) file(s) found:
+#   /usr/bin/cgal_make_macosx_app
+
 %define boost_version 1.32
 Summary:	Computational Geometry Algorithms Library
 Name:		CGAL
@@ -8,6 +18,11 @@ Group:		Libraries
 Source0:	https://gforge.inria.fr/frs/download.php/file/34705/%{name}-%{version}.tar.xz
 # Source0-md5:	65fa7e17cd654ef68da47df608000007
 URL:		http://www.cgal.org/
+BuildRequires:	OpenGL-GLU-devel
+BuildRequires:	QtCore-devel
+BuildRequires:	QtGui-devel
+BuildRequires:	QtOpenGL-devel
+BuildRequires:	QtSvg-devel
 BuildRequires:	blas-devel
 BuildRequires:	boost-devel >= %{boost_version}
 BuildRequires:	cmake
@@ -15,7 +30,8 @@ BuildRequires:	gmp-c++-devel
 BuildRequires:	gmp-devel
 BuildRequires:	lapack-devel
 BuildRequires:	mpfr-devel
-BuildRequires:	qt-devel >= 3.0
+BuildRequires:	qt4-build
+BuildRequires:	qt4-qmake
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
