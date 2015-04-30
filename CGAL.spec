@@ -5,9 +5,9 @@ Version:	4.6
 Release:	1
 License:	GPLv3+ and LGPLv3+
 Group:		Libraries
-URL:		http://www.cgal.org/
 Source0:	https://gforge.inria.fr/frs/download.php/file/34705/%{name}-%{version}.tar.xz
 # Source0-md5:	65fa7e17cd654ef68da47df608000007
+URL:		http://www.cgal.org/
 BuildRequires:	blas-devel
 BuildRequires:	boost-devel >= %{boost_version}
 BuildRequires:	cmake
@@ -31,7 +31,6 @@ algorithms.
 %package devel
 Summary:	Development files and tools for CGAL applications
 Group:		Development/Libraries
-Requires:	%{_sysconfdir}/profile.d
 Requires:	%{name} = %{version}-%{release}
 Requires:	blas-devel
 Requires:	boost-devel >= %{boost_version}
@@ -62,9 +61,8 @@ demos of CGAL algorithms.
 %build
 install -d build
 cd build
-
+# what is ${CHANGE_SOVERSION} here?
 %cmake \
-	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
 	-DCGAL_INSTALL_LIB_DIR=%{_lib} \
 	-DCGAL_INSTALL_DOC_DIR= ${CHANGE_SOVERSION} \
 	..
@@ -72,7 +70,6 @@ cd build
 %{__make}
 
 %install
-
 rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
