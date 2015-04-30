@@ -61,8 +61,12 @@ demos of CGAL algorithms.
 %build
 install -d build
 cd build
-# what is ${CHANGE_SOVERSION} here?
+# override build type, because:
+# PLD is not a valid build type: only Release or Debug is allowed
+
+# XXX: what is ${CHANGE_SOVERSION} here?
 %cmake \
+	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
 	-DCGAL_INSTALL_LIB_DIR=%{_lib} \
 	-DCGAL_INSTALL_DOC_DIR= ${CHANGE_SOVERSION} \
 	..
