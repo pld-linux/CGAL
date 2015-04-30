@@ -2,7 +2,7 @@
 Summary:	Computational Geometry Algorithms Library
 Name:		CGAL
 Version:	3.3.1
-Release:	0.99
+Release:	1
 License:	QPL and LGPLv2 and LGPLv2+
 Group:		Libraries
 URL:		http://www.cgal.org/
@@ -155,7 +155,7 @@ sed -i.bak -f makefile.sed $RPM_BUILD_ROOT%{_datadir}/CGAL/cgal-${SUFFIX}.mk
 grep -q %{_builddir} $RPM_BUILD_ROOT%{_datadir}/CGAL/cgal-${SUFFIX}.mk && false
 grep -q $RPM_BUILD_ROOT $RPM_BUILD_ROOT%{_datadir}/CGAL/cgal-${SUFFIX}.mk && false
 grep -q CGAL/config $RPM_BUILD_ROOT%{_datadir}/CGAL/cgal-${SUFFIX}.mk && false
-grep -q -E 'CUSTOM_CXXFLAGS.*(-O2|-g)' $RPM_BUILD_ROOT%{_datadir}/CGAL/cgal-${SUFFIX}.mk && false
+grep -q -E 'CUSTOM_CXXFLAGS.*(-O2|-g )' $RPM_BUILD_ROOT%{_datadir}/CGAL/cgal-${SUFFIX}.mk && false
 
 # Remove -L and -R flags from the makefile
 cat > makefile-noprefix.sed <<'EOF'
