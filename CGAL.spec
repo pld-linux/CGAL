@@ -13,7 +13,7 @@
 Summary:	Computational Geometry Algorithms Library
 Name:		CGAL
 Version:	4.6
-Release:	1
+Release:	2
 License:	GPLv3+ and LGPLv3+
 Group:		Libraries
 Source0:	https://gforge.inria.fr/frs/download.php/file/34705/%{name}-%{version}.tar.xz
