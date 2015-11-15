@@ -1,5 +1,5 @@
 # TODO
-# - force use of qt4, otherwise it may pick qt3! add bcond?
+# - force use of qt5, otherwise it may pick qt4! add bcond?
 # - check these:
 #   blas-devel may be superfluous !
 #   gmp-c++-devel may be superfluous !
@@ -12,18 +12,18 @@
 %define boost_version 1.32
 Summary:	Computational Geometry Algorithms Library
 Name:		CGAL
-Version:	4.6
-Release:	2
+Version:	4.7
+Release:	1
 License:	GPLv3+ and LGPLv3+
 Group:		Libraries
-Source0:	https://gforge.inria.fr/frs/download.php/file/34705/%{name}-%{version}.tar.xz
-# Source0-md5:	65fa7e17cd654ef68da47df608000007
+Source0:	https://github.com/CGAL/releases/archive/%{name}-%{version}.tar.gz
+# Source0-md5:	50b29d3f3372cd93aaa31d01f0e45036
 URL:		http://www.cgal.org/
 BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	QtCore-devel
-BuildRequires:	QtGui-devel
-BuildRequires:	QtOpenGL-devel
-BuildRequires:	QtSvg-devel
+BuildRequires:	Qt5Core-devel
+BuildRequires:	Qt5Gui-devel
+BuildRequires:	Qt5OpenGL-devel
+BuildRequires:	Qt5Svg-devel
 BuildRequires:	blas-devel
 BuildRequires:	boost-devel >= %{boost_version}
 BuildRequires:	cmake
@@ -72,7 +72,7 @@ The %{name}-demos-source package provides the sources of examples and
 demos of CGAL algorithms.
 
 %prep
-%setup -q
+%setup -q -n releases-%{name}-%{version}
 
 %build
 install -d build
@@ -109,8 +109,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libCGAL_Core.so.11
 %attr(755,root,root) %{_libdir}/libCGAL_ImageIO.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libCGAL_ImageIO.so.11
-%attr(755,root,root) %{_libdir}/libCGAL_Qt4.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCGAL_Qt4.so.11
+%attr(755,root,root) %{_libdir}/libCGAL_Qt5.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libCGAL_Qt5.so.11
 
 %files devel
 %defattr(644,root,root,755)
