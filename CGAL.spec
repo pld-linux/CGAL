@@ -11,6 +11,7 @@
 
 %define boost_version 1.32
 Summary:	Computational Geometry Algorithms Library
+Summary(pl.UTF-8):	Computational Geometry Algorithms Library - biblioteka algorytmów geometrii obliczeniowej
 Name:		CGAL
 Version:	4.7
 Release:	1
@@ -45,8 +46,17 @@ geometry available to users in industry and academia in a C++ library.
 The goal is to provide easy access to useful, reliable geometric
 algorithms.
 
+%description -l pl.UTF-8
+Biblioteka dla aplikacji CGAL (Computational Geometry Algorithms
+Library). CGAL to wspólny projekt kilku placówek w Europie i Izraelu.
+Celem jest udostępnienie najważniejszych rozwiązań i metod powstałych
+w geometrii obliczeniowej dla użytkowników przemysłowych i naukowych w
+postaci biblioteki C++. Ma ona za zadanie zapewniać łatwy dostęp do
+przydatnych, wiarygodnych algorytmów geometrycznych.
+
 %package devel
 Summary:	Development files and tools for CGAL applications
+Summary(pl.UTF-8):	Pliki i narzędzia programistyczne dla aplikacji CGAL
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Requires:	blas-devel
@@ -59,17 +69,26 @@ Requires:	qt-devel
 Requires:	zlib-devel
 
 %description devel
-The %{name}-devel package provides the headers files and tools you may
-need to develop applications using CGAL.
+This package provides the header files and tools you may need to
+develop applications using CGAL.
+
+%description devel -l pl.UTF-8
+Ten pakiet zawiera pliki nagłówkowe i narzędzia potrzebne do tworzenia
+aplikacji wykorzystujących CGAL.
 
 %package demos-source
 Summary:	Examples and demos of CGAL algorithms
+Summary(pl.UTF-8):	Przykłady i programy demonstracyjne do algorytmów CGAL
 Group:		Documentation
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description demos-source
-The %{name}-demos-source package provides the sources of examples and
-demos of CGAL algorithms.
+This package provides the sources of examples and demos of CGAL
+algorithms.
+
+%description demos-source -l pl.UTF-8
+Ten pakiet zawiera kod źrodłowy programów przykładowych i
+demonstracyjnych do algorytmów CGAL.
 
 %prep
 %setup -q -n releases-%{name}-%{version}
@@ -116,7 +135,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/cgal_create_CMakeLists
 %attr(755,root,root) %{_bindir}/cgal_create_cmake_script
+%attr(755,root,root) %{_libdir}/libCGAL*.so
 %{_includedir}/CGAL
 %{_libdir}/CGAL
-%attr(755,root,root) %{_libdir}/libCGAL*.so
 %{_mandir}/man1/cgal_create_cmake_script.1*
