@@ -32,6 +32,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	mpfr-devel >= 2.2.1
 BuildRequires:	qt5-build >= %{qt5_ver}
 BuildRequires:	qt5-qmake >= %{qt5_ver}
+BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
 %if %{with qt3}
