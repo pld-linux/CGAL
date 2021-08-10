@@ -1,0 +1,13 @@
+--- releases-CGAL-4.7/cmake/modules/CGAL_SetupFlags.cmake.orig	2015-10-20 09:06:23.000000000 +0200
++++ releases-CGAL-4.7/cmake/modules/CGAL_SetupFlags.cmake	2021-08-10 13:26:55.346479677 +0200
+@@ -61,10 +61,6 @@
+   add_definitions(-DCGAL_TEST_SUITE)
+ endif()
+ 
+-if ( NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Release" AND NOT "${CMAKE_BUILD_TYPE}" STREQUAL "Debug" )
+-  message( FATAL_ERROR "${CMAKE_BUILD_TYPE} is not a valid build type: only Release or Debug is allowed" )
+-endif()
+-
+ message( STATUS "Build type: ${CMAKE_BUILD_TYPE}" )
+ 
+ string( TOUPPER "${CMAKE_BUILD_TYPE}" CGAL_BUILD_TYPE_UPPER )

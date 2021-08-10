@@ -17,6 +17,7 @@ License:	GPL v3+ and LGPL v3+
 Group:		Libraries
 Source0:	https://github.com/CGAL/releases/archive/%{name}-%{version}.tar.gz
 # Source0-md5:	50b29d3f3372cd93aaa31d01f0e45036
+Patch0:		%{name}-buildtype.patch
 URL:		http://www.cgal.org/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	Qt5Core-devel >= %{qt5_ver}
@@ -115,6 +116,7 @@ demonstracyjnych do algorytmów CGAL.
 
 %prep
 %setup -q -n releases-%{name}-%{version}
+%patch0 -p1
 
 %build
 install -d build
@@ -122,10 +124,8 @@ cd build
 # override build type, because:
 # PLD is not a valid build type: only Release or Debug is allowed
 %cmake .. \
-	-DCMAKE_BUILD_TYPE=%{!?debug:Release}%{?debug:Debug} \
-	-DCMAKE_CXX_FLAGS_Release="%{rpmcxxflags}" \
-	-DCMAKE_EXE_LINKER_FLAGS_Release="%{rpmldflags}" \
-	-DCMAKE_SHARED_LINKER_FLAGS_Release="%{rpmldflags}" \
+	-DCGAL_CXX_FLAGS="%{rpmcxxflags} %{rpmcppflags}" \
+	-DCGAL_SHARED_LINKER_FLAGS="%{rpmldflags}" \
 	-DCGAL_INSTALL_LIB_DIR=%{_lib} \
 	-DCGAL_INSTALL_DOC_DIR= \
 	%{?with_qt3:-DWITH_CGAL_Qt3=ON} \
