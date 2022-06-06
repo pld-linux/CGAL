@@ -11,12 +11,12 @@
 Summary:	Computational Geometry Algorithms Library
 Summary(pl.UTF-8):	Computational Geometry Algorithms Library - biblioteka algorytmów geometrii obliczeniowej
 Name:		CGAL
-Version:	4.7
-Release:	10
+Version:	4.9
+Release:	1
 License:	GPL v3+ and LGPL v3+
 Group:		Libraries
 Source0:	https://github.com/CGAL/releases/archive/%{name}-%{version}.tar.gz
-# Source0-md5:	50b29d3f3372cd93aaa31d01f0e45036
+# Source0-md5:	eea6dbcaecac52f42124572d839d0e5b
 Patch0:		%{name}-buildtype.patch
 URL:		http://www.cgal.org/
 BuildRequires:	OpenGL-GLU-devel
@@ -155,17 +155,17 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS CHANGES LICENSE LICENSE.BSL LICENSE.FREE_USE LICENSE.LGPL
 %attr(755,root,root) %{_libdir}/libCGAL.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCGAL.so.11
+%attr(755,root,root) %ghost %{_libdir}/libCGAL.so.12
 %attr(755,root,root) %{_libdir}/libCGAL_Core.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCGAL_Core.so.11
+%attr(755,root,root) %ghost %{_libdir}/libCGAL_Core.so.12
 %attr(755,root,root) %{_libdir}/libCGAL_ImageIO.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCGAL_ImageIO.so.11
+%attr(755,root,root) %ghost %{_libdir}/libCGAL_ImageIO.so.12
 %if %{with qt3}
 %attr(755,root,root) %{_libdir}/libCGAL_Qt3.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCGAL_Qt3.so.11
+%attr(755,root,root) %ghost %{_libdir}/libCGAL_Qt3.so.12
 %endif
 %attr(755,root,root) %{_libdir}/libCGAL_Qt5.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCGAL_Qt5.so.11
+%attr(755,root,root) %ghost %{_libdir}/libCGAL_Qt5.so.12
 
 %files devel
 %defattr(644,root,root,755)
