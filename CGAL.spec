@@ -4,7 +4,6 @@
 #
 # Conditional build:
 %bcond_with	examples	# demo+examples build
-%bcond_with	qt3		# CGAL_Qt3 library
 
 %define	boost_ver	1.48
 %define	qt5_ver		5.3
@@ -35,11 +34,6 @@ BuildRequires:	qt5-qmake >= %{qt5_ver}
 BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	sed >= 4.0
 BuildRequires:	zlib-devel
-%if %{with qt3}
-BuildRequires:	qt-devel >= 3
-BuildRequires:	xorg-lib-libX11-devel
-BuildRequires:	xorg-lib-libXext-devel
-%endif
 %if %{with examples}
 BuildRequires:	blas-devel
 BuildRequires:	eigen3 >= 3.1.91
@@ -78,10 +72,6 @@ Requires:	Qt5Core-devel >= %{qt5_ver}
 Requires:	Qt5Gui-devel >= %{qt5_ver}
 Requires:	Qt5OpenGL-devel >= %{qt5_ver}
 Requires:	Qt5Widgets-devel >= %{qt5_ver}
-# for Qt3 component
-%if %{with qt3}
-Requires:	qt-devel >= 3
-%endif
 # CGAL header interfaces for (using their headers) - use Suggests?
 Requires:	gmp-c++-devel >= 4.1.4
 Requires:	gmp-devel >= 4.1.4
@@ -129,7 +119,6 @@ cd build
 	-DCGAL_SHARED_LINKER_FLAGS="%{rpmldflags}" \
 	-DCGAL_INSTALL_LIB_DIR=%{_lib} \
 	-DCGAL_INSTALL_DOC_DIR= \
-	%{?with_qt3:-DWITH_CGAL_Qt3=ON} \
 %if %{with examples}
 	-DWITH_demos=ON \
 	-DWITH_examples=ON
@@ -160,10 +149,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %ghost %{_libdir}/libCGAL_Core.so.12
 %attr(755,root,root) %{_libdir}/libCGAL_ImageIO.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libCGAL_ImageIO.so.12
-%if %{with qt3}
-%attr(755,root,root) %{_libdir}/libCGAL_Qt3.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCGAL_Qt3.so.12
-%endif
 %attr(755,root,root) %{_libdir}/libCGAL_Qt5.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libCGAL_Qt5.so.12
 
@@ -172,9 +157,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libCGAL.so
 %attr(755,root,root) %{_libdir}/libCGAL_Core.so
 %attr(755,root,root) %{_libdir}/libCGAL_ImageIO.so
-%if %{with qt3}
-%attr(755,root,root) %{_libdir}/libCGAL_Qt3.so
-%endif
 %attr(755,root,root) %{_libdir}/libCGAL_Qt5.so
 %{_includedir}/CGAL
 %{_libdir}/CGAL
