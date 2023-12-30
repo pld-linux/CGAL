@@ -11,13 +11,13 @@
 Summary:	Computational Geometry Algorithms Library
 Summary(pl.UTF-8):	Computational Geometry Algorithms Library - biblioteka algorytmów geometrii obliczeniowej
 Name:		CGAL
-Version:	4.14.2
+Version:	4.14.3
 Release:	1
 License:	GPL v3+ and LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/CGAL/cgal/releases
-Source0:	https://github.com/CGAL/releases/archive/%{name}-%{version}.tar.gz
-# Source0-md5:	60dcfe9cf3b44ccfca1411f8276837f5
+Source0:	https://github.com/CGAL/cgal/releases/download/releases/%{name}-%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	41c56ad048ce882aae6ff5b56256fe95
 Patch0:		%{name}-buildtype.patch
 URL:		https://www.cgal.org/
 BuildRequires:	OpenGL-GLU-devel
@@ -34,7 +34,9 @@ BuildRequires:	mpfr-devel >= 2.2.1
 BuildRequires:	qt5-build >= %{qt5_ver}
 BuildRequires:	qt5-qmake >= %{qt5_ver}
 BuildRequires:	rpmbuild(macros) >= 1.605
+BuildRequires:	tar >= 1:1.22
 BuildRequires:	sed >= 4.0
+BuildRequires:	xz
 BuildRequires:	zlib-devel
 %if %{with examples}
 BuildRequires:	blas-devel
@@ -108,7 +110,7 @@ Ten pakiet zawiera kod źrodłowy programów przykładowych i
 demonstracyjnych do algorytmów CGAL.
 
 %prep
-%setup -q -n releases-%{name}-%{version}
+%setup -q
 %patch0 -p1
 
 %build
