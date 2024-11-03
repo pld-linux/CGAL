@@ -1,5 +1,5 @@
 # TODO
-# - move qt stuff to subpackages? (libCGAL_Qt5.so, include/CGAL/Qt, some cmake files)
+# - move qt stuff to subpackages? (include/CGAL/Qt, some cmake files)
 # - MPFI (>= 1.5.2, mpfr >= 4.0.0)
 # - LEDA, RS, RS3 (rather old, non-free; no longer available?)
 #
@@ -7,32 +7,32 @@
 %bcond_with	examples	# demo+examples build
 
 %define	boost_ver	1.48
-%define	qt5_ver		5.3
+%define	qt6_ver		6.4
 Summary:	Computational Geometry Algorithms Library
 Summary(pl.UTF-8):	Computational Geometry Algorithms Library - biblioteka algorytmów geometrii obliczeniowej
 Name:		CGAL
-Version:	4.14.3
+Version:	6.0.1
 Release:	1
 License:	GPL v3+ and LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/CGAL/cgal/releases
-Source0:	https://github.com/CGAL/cgal/releases/download/releases/%{name}-%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	41c56ad048ce882aae6ff5b56256fe95
+Source0:	https://github.com/CGAL/cgal/releases/download/v%{version}/%{name}-%{version}.tar.xz
+# Source0-md5:	944c789615bff14a56d78b398ec2cc49
 Patch0:		%{name}-buildtype.patch
 URL:		https://www.cgal.org/
 BuildRequires:	OpenGL-GLU-devel
-BuildRequires:	Qt5Core-devel >= %{qt5_ver}
-BuildRequires:	Qt5Gui-devel >= %{qt5_ver}
-BuildRequires:	Qt5OpenGL-devel >= %{qt5_ver}
-BuildRequires:	Qt5Svg-devel >= %{qt5_ver}
-BuildRequires:	Qt5Widgets-devel >= %{qt5_ver}
+BuildRequires:	Qt6Core-devel >= %{qt6_ver}
+BuildRequires:	Qt6Gui-devel >= %{qt6_ver}
+BuildRequires:	Qt6OpenGL-devel >= %{qt6_ver}
+BuildRequires:	Qt6Svg-devel >= %{qt6_ver}
+BuildRequires:	Qt6Widgets-devel >= %{qt6_ver}
 BuildRequires:	boost-devel >= %{boost_ver}
 BuildRequires:	cmake >= 3.1
 BuildRequires:	gmp-devel >= 4.1.4
 BuildRequires:	libstdc++-devel
 BuildRequires:	mpfr-devel >= 2.2.1
-BuildRequires:	qt5-build >= %{qt5_ver}
-BuildRequires:	qt5-qmake >= %{qt5_ver}
+BuildRequires:	qt6-build >= %{qt6_ver}
+BuildRequires:	qt6-qmake >= %{qt6_ver}
 BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	tar >= 1:1.22
 BuildRequires:	sed >= 4.0
@@ -46,6 +46,8 @@ BuildRequires:	ipe-devel >= 7
 BuildRequires:	lapack-devel
 BuildRequires:	tbb
 %endif
+Obsoletes:	CGAL < 6.0.1
+BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -68,14 +70,13 @@ przydatnych, wiarygodnych algorytmów geometrycznych.
 Summary:	Development files and tools for CGAL applications
 Summary(pl.UTF-8):	Pliki i narzędzia programistyczne dla aplikacji CGAL
 Group:		Development/Libraries
-Requires:	%{name} = %{version}-%{release}
 Requires:	boost-devel >= %{boost_ver}
 Requires:	libstdc++-devel
-# for Qt5 component
-Requires:	Qt5Core-devel >= %{qt5_ver}
-Requires:	Qt5Gui-devel >= %{qt5_ver}
-Requires:	Qt5OpenGL-devel >= %{qt5_ver}
-Requires:	Qt5Widgets-devel >= %{qt5_ver}
+# for Qt6 component
+Requires:	Qt6Core-devel >= %{qt6_ver}
+Requires:	Qt6Gui-devel >= %{qt6_ver}
+Requires:	Qt6OpenGL-devel >= %{qt6_ver}
+Requires:	Qt6Widgets-devel >= %{qt6_ver}
 # CGAL header interfaces for (using their headers) - use Suggests?
 Requires:	gmp-c++-devel >= 4.1.4
 Requires:	gmp-devel >= 4.1.4
@@ -134,35 +135,18 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# useless for Linux
-%{__rm} $RPM_BUILD_ROOT%{_bindir}/cgal_make_macosx_app
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %post	-p /sbin/ldconfig
 %postun	-p /sbin/ldconfig
 
-%files
-%defattr(644,root,root,755)
-%doc AUTHORS CHANGES.md LICENSE LICENSE.BSL LICENSE.FREE_USE README
-%attr(755,root,root) %{_libdir}/libCGAL.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCGAL.so.13
-%attr(755,root,root) %{_libdir}/libCGAL_Core.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCGAL_Core.so.13
-%attr(755,root,root) %{_libdir}/libCGAL_ImageIO.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCGAL_ImageIO.so.14
-%attr(755,root,root) %{_libdir}/libCGAL_Qt5.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libCGAL_Qt5.so.14
-
 %files devel
 %defattr(644,root,root,755)
+%doc AUTHORS CHANGES.md README.md
+%doc LICENSE LICENSE.BSL LICENSE.COMMERCIAL LICENSE.RFL
 %attr(755,root,root) %{_bindir}/cgal_create_CMakeLists
 %attr(755,root,root) %{_bindir}/cgal_create_cmake_script
-%attr(755,root,root) %{_libdir}/libCGAL.so
-%attr(755,root,root) %{_libdir}/libCGAL_Core.so
-%attr(755,root,root) %{_libdir}/libCGAL_ImageIO.so
-%attr(755,root,root) %{_libdir}/libCGAL_Qt5.so
 %{_includedir}/CGAL
 %{_libdir}/cmake/CGAL
 %{_mandir}/man1/cgal_create_cmake_script.1*
