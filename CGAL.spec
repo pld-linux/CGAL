@@ -46,7 +46,6 @@ BuildRequires:	ipe-devel >= 7
 BuildRequires:	lapack-devel
 BuildRequires:	tbb
 %endif
-Obsoletes:	CGAL < 6.0.1
 BuildArch:	noarch
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -87,6 +86,7 @@ Requires:	zlib-devel
 # CGAL header interfaces for (without using their headers) - use Suggests?
 Requires:	blas-devel
 Requires:	lapack-devel
+Obsoletes:	CGAL < 6.0.1
 
 %description devel
 This package provides the header files and tools you may need to
