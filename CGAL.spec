@@ -12,7 +12,7 @@ Summary:	Computational Geometry Algorithms Library
 Summary(pl.UTF-8):	Computational Geometry Algorithms Library - biblioteka algorytmów geometrii obliczeniowej
 Name:		CGAL
 Version:	6.0.1
-Release:	1
+Release:	2
 License:	GPL v3+ and LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/CGAL/cgal/releases
@@ -120,7 +120,7 @@ cd build
 %cmake .. \
 	-DCGAL_CXX_FLAGS="%{rpmcxxflags} %{rpmcppflags}" \
 	-DCGAL_SHARED_LINKER_FLAGS="%{rpmldflags}" \
-	-DCGAL_INSTALL_LIB_DIR=%{_lib} \
+	-DCGAL_INSTALL_LIB_DIR=%{_datadir} \
 	-DCGAL_INSTALL_DOC_DIR= \
 %if %{with examples}
 	-DWITH_demos=ON \
@@ -148,5 +148,5 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_bindir}/cgal_create_CMakeLists
 %attr(755,root,root) %{_bindir}/cgal_create_cmake_script
 %{_includedir}/CGAL
-%{_libdir}/cmake/CGAL
+%{_datadir}/cmake/CGAL
 %{_mandir}/man1/cgal_create_cmake_script.1*
