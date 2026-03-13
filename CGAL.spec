@@ -11,13 +11,13 @@
 Summary:	Computational Geometry Algorithms Library
 Summary(pl.UTF-8):	Computational Geometry Algorithms Library - biblioteka algorytmów geometrii obliczeniowej
 Name:		CGAL
-Version:	6.0.1
-Release:	2
+Version:	6.1.1
+Release:	1
 License:	GPL v3+ and LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/CGAL/cgal/releases
 Source0:	https://github.com/CGAL/cgal/releases/download/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	944c789615bff14a56d78b398ec2cc49
+# Source0-md5:	609c280f2dadb1d2d74e929621b03e19
 Patch0:		%{name}-buildtype.patch
 URL:		https://www.cgal.org/
 BuildRequires:	OpenGL-GLU-devel
