@@ -6,18 +6,18 @@
 # Conditional build:
 %bcond_with	examples	# demo+examples build
 
-%define	boost_ver	1.48
+%define	boost_ver	1.74
 %define	qt6_ver		6.4
 Summary:	Computational Geometry Algorithms Library
 Summary(pl.UTF-8):	Computational Geometry Algorithms Library - biblioteka algorytmów geometrii obliczeniowej
 Name:		CGAL
-Version:	6.1.1
+Version:	6.2
 Release:	1
 License:	GPL v3+ and LGPL v3+
 Group:		Libraries
 #Source0Download: https://github.com/CGAL/cgal/releases
 Source0:	https://github.com/CGAL/cgal/releases/download/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	609c280f2dadb1d2d74e929621b03e19
+# Source0-md5:	8b2ea422e9895bc0cc8ae1c250334b43
 Patch0:		%{name}-buildtype.patch
 URL:		https://www.cgal.org/
 BuildRequires:	OpenGL-GLU-devel
@@ -27,9 +27,9 @@ BuildRequires:	Qt6OpenGL-devel >= %{qt6_ver}
 BuildRequires:	Qt6Svg-devel >= %{qt6_ver}
 BuildRequires:	Qt6Widgets-devel >= %{qt6_ver}
 BuildRequires:	boost-devel >= %{boost_ver}
-BuildRequires:	cmake >= 3.1
+BuildRequires:	cmake >= 3.15
 BuildRequires:	gmp-devel >= 4.1.4
-BuildRequires:	libstdc++-devel
+BuildRequires:	libstdc++-devel >= 6:13.3
 BuildRequires:	mpfr-devel >= 2.2.1
 BuildRequires:	qt6-build >= %{qt6_ver}
 BuildRequires:	qt6-qmake >= %{qt6_ver}
@@ -70,7 +70,7 @@ Summary:	Development files and tools for CGAL applications
 Summary(pl.UTF-8):	Pliki i narzędzia programistyczne dla aplikacji CGAL
 Group:		Development/Libraries
 Requires:	boost-devel >= %{boost_ver}
-Requires:	libstdc++-devel
+Requires:	libstdc++-devel >= 6:13.3
 # for Qt6 component
 Requires:	Qt6Core-devel >= %{qt6_ver}
 Requires:	Qt6Gui-devel >= %{qt6_ver}
@@ -115,9 +115,7 @@ demonstracyjnych do algorytmów CGAL.
 %patch -P0 -p1
 
 %build
-install -d build
-cd build
-%cmake .. \
+%cmake -B build \
 	-DCGAL_CXX_FLAGS="%{rpmcxxflags} %{rpmcppflags}" \
 	-DCGAL_SHARED_LINKER_FLAGS="%{rpmldflags}" \
 	-DCGAL_INSTALL_LIB_DIR=%{_datadir} \
@@ -127,7 +125,7 @@ cd build
 	-DWITH_examples=ON
 %endif
 
-%{__make}
+%{__make} -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
